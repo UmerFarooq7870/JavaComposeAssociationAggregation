@@ -1,4 +1,4 @@
-using encapsulation wrrite program to encapsulates student (int roll no , name )
+using encapsulation write program to encapsulates student (int roll no , name )
 
 
 package javaprogram;
@@ -240,3 +240,4 @@ public class AssignmentMain {
         driver.drive(sportsCar);
     }
 }
+
