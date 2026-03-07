@@ -1,0 +1,242 @@
+using encapsulation wrrite program to encapsulates student (int roll no , name )
+
+
+package javaprogram;
+
+class Student {
+    // 1. Private variables (Data Hiding)
+    private String name;
+    private int rollNo;
+
+    // 2. Constructor to initialize the student
+    public Student(String name, int rollNo) {
+        this.name = name;
+        this.rollNo = rollNo;
+    }
+
+    // 3. Getter for Name (Allows reading only)
+    public String getName() {
+        return name;
+    }
+
+    // 4. Setter for Name (Allows changing with a rule)
+    public void setName(String name) {
+        if (name != null && !name.isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Error: Name cannot be empty!");
+        }
+    }
+
+    // 5. Getter for Roll No
+    public int getRollNo() {
+        return rollNo;
+    }
+
+    // 6. Setter for Roll No
+    public void setRollNo(int rollNo) {
+        if (rollNo > 0) {
+            this.rollNo = rollNo;
+        } else {
+            System.out.println("Error: Roll number must be positive!");
+        }
+    }
+
+    public static void main(String[] args) {
+        // Create a new student object
+        Student s1 = new Student("Alice", 101);
+
+        // This would cause a COMPILE ERROR because variables are private:
+        // s1.name = ""; 
+
+        // We MUST use the public methods
+        System.out.println("Original Student: " + s1.getName() + " (Roll: " + s1.getRollNo() + ")");
+
+        // Changing data through a Setter
+        s1.setName("Alice Cooper");
+        s1.setRollNo(102);
+
+        System.out.println("Updated Student: " + s1.getName() + " (Roll: " + s1.getRollNo() + ")");
+        
+        // Trying to set an invalid value (The "Protection" part of encapsulation)
+        s1.setRollNo(-5); 
+    }}
+
+
+
+write a example of inheritence
+
+// The Superclass (Parent)
+class Animal {
+    String name;
+
+    void eat() {
+        System.out.println(name + " is eating...");
+    }
+}
+
+// The Subclass (Child) - uses "extends" keyword
+class Dog extends Animal {
+    
+    // This method is unique to Dog
+    void bark() {
+        System.out.println(name + " says: Woof! Woof!");
+    }
+
+    // Overriding: Changing a parent's behavior to fit the child
+    @Override
+    void eat() {
+        System.out.println(name + " is crunching on a bone.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a Dog object
+        Dog myDog = new Dog();
+        
+        // 1. Accessing a field inherited from Animal
+        myDog.name = "Buddy";
+        
+        // 2. Calling a method inherited (and changed) from Animal
+        myDog.eat(); 
+        
+        // 3. Calling a method that only exists in Dog
+        myDog.bark();
+    }
+}
+
+
+
+
+
+
+
+
+
+inherit a class
+
+
+
+// The Parent Class (Superclass)
+class Doctor {
+    String name = "Dr. Smith";
+
+    void checkUp() {
+        System.out.println(name + " is performing a general check-up.");
+    }
+}
+
+// The Child Class (Subclass) - Inherits from Doctor
+class Surgeon extends Doctor {
+    // New variable only for Surgeons
+    String tool = "Scalpel";
+
+    // New method only for Surgeons
+    void operate() {
+        System.out.println(name + " is performing surgery using a " + tool);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create an object of the Child class
+        Surgeon mySurgeon = new Surgeon();
+
+        // 1. Using a variable inherited from Doctor
+        System.out.println("Doctor Name: " + mySurgeon.name);
+
+        // 2. Using a method inherited from Doctor
+        mySurgeon.checkUp();
+
+        // 3. Using a method unique to Surgeon
+        mySurgeon.operate();
+    }
+}
+
+
+Compose a Class (Composition)
+
+class Room {
+    private String type;
+    public Room(String type) { this.type = type; }
+    public String getType() { return type; }
+}
+
+class House {
+    // Composition: The House CREATES the Room inside its constructor.
+    private Room livingRoom;
+
+    public House() {
+        this.livingRoom = new Room("Living Room");
+    }
+
+    public void showDetails() {
+        System.out.println("This house has a: " + livingRoom.getType());
+    }
+}
+
+
+Compose Class with Aggregation
+
+
+class Teacher {
+    private String name;
+    public Teacher(String name) { this.name = name; }
+    public String getName() { return name; }
+}
+
+class Department {
+    private String deptName;
+    // Aggregation: The Teacher is passed in from OUTSIDE.
+    private Teacher teacher; 
+
+    public Department(String deptName, Teacher teacher) {
+        this.deptName = deptName;
+        this.teacher = teacher;
+    }
+
+    public void info() {
+        System.out.println(teacher.getName() + " works in " + deptName);
+    }
+}
+
+3.2.2. Compose Class with Association
+
+
+class Car {
+    private String model;
+    public Car(String model) { this.model = model; }
+    public String getModel() { return model; }
+}
+
+class Driver {
+    private String name;
+    public Driver(String name) { this.name = name; }
+
+    // Association: The Driver uses the Car in a method, 
+    // but the Car isn't a permanent "part" of the Driver object.
+    public void drive(Car car) {
+        System.out.println(name + " is driving a " + car.getModel());
+    }
+}
+
+main class to run everything
+
+public class AssignmentMain {
+    public static void main(String[] args) {
+        // Testing Composition
+        House myHouse = new House();
+        myHouse.showDetails();
+
+        // Testing Aggregation
+        Teacher prof = new Teacher("Mr. John");
+        Department cs = new Department("Computer Science", prof);
+        cs.info();
+
+        // Testing Association
+        Driver driver = new Driver("Alex");
+        Car sportsCar = new Car("Ferrari");
+        driver.drive(sportsCar);
+    }
+}
