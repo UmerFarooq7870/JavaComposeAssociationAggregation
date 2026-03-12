@@ -1,0 +1,134 @@
+1. Write a program in Java that computes the areas of Circle, Triangle, and Rectangle using Compile-Time polymorphism.
+Note: Compile-time polymorphism (Method Overloading) requires methods to have the same name but different parameter lists. Since Triangle and Rectangle both usually take two double values, I’ve differentiated them by using a float for the Triangle parameters to ensure the signatures are unique.
+
+public class AreaCalculate {
+
+    // Rectangle: Two doubles
+    public void calculateArea(double length, double width) {
+        double area = length * width;
+        System.out.println("Area of Rectangle: " + area);
+    }
+
+    // Triangle: Two floats (to distinguish from Rectangle)
+    public void calculateArea(float base, float height) {
+        double area = 0.5 * base * height;
+        System.out.println("Area of Triangle: " + area);
+    }
+
+    // Circle: One double
+    public void calculateArea(double radius) {
+        double area = Math.PI * radius * radius;
+        System.out.println("Area of Circle: " + area);
+    }
+
+    public static void main(String[] args) {
+        AreaCalculate myArea = new AreaCalculate();
+        
+        myArea.calculateArea(5.0);            // Calls Circle
+        myArea.calculateArea(10.0, 4.0);      // Calls Rectangle
+        myArea.calculateArea(6.0f, 8.0f);     // Calls Triangle
+    }
+}
+
+2. Write a program in Java that computes the areas of Circle, Triangle, and Rectangle using Run-Time polymorphism.
+Note: Run-time polymorphism (Method Overriding) uses Inheritance. The parent class defines the method, and each subclass provides its own specific implementation.
+
+class Shape {
+    public void calculateArea() {
+        System.out.println("Area calculation not defined for generic shape.");
+    }
+}
+
+class Rectangle extends Shape {
+    private double length, width;
+    Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+    @Override
+    public void calculateArea() {
+        System.out.println("Area of Rectangle: " + (length * width));
+    }
+}
+
+class Triangle extends Shape {
+    private double base, height;
+    Triangle(double base, double height) {
+        this.base = base;
+        this.height = height;
+    }
+    @Override
+    public void calculateArea() {
+        System.out.println("Area of Triangle: " + (0.5 * base * height));
+    }
+}
+
+class Circle extends Shape {
+    private double radius;
+    Circle(double radius) {
+        this.radius = radius;
+    }
+    @Override
+    public void calculateArea() {
+        System.out.println("Area of Circle: " + (Math.PI * radius * radius));
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Shape myShape;
+
+        myShape = new Circle(5.0);
+        myShape.calculateArea(); 
+
+        myShape = new Rectangle(10.0, 4.0);
+        myShape.calculateArea(); 
+
+        myShape = new Triangle(6.0, 8.0);
+        myShape.calculateArea(); 
+    }
+}
+
+3. Write a program in Java to implement abstraction using "Person" and "Employee" classes.
+Note: By making Person abstract, we hide the general concept of a person and only expose the specific implementation (Employee).
+
+abstract class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Abstract method: Hidden detail to be implemented by subclass
+    public abstract void displayDetails();
+
+    // Regular getters
+    public String getName() { return name; }
+    public int getAge() { return age; }
+}
+
+class Employee extends Person {
+    private String employeeId;
+
+    public Employee(String name, int age, String employeeId) {
+        super(name, age);
+        this.employeeId = employeeId;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("Employee ID: " + employeeId);
+        System.out.println("Name: " + getName());
+        System.out.println("Age: " + getAge());
+    }
+}
+
+public class AbstractionDemo {
+    public static void main(String[] args) {
+        // We cannot instantiate 'Person' directly, hiding its internal details.
+        Person emp = new Employee("John Doe", 30, "E123");
+        emp.displayDetails();
+    }
+}
